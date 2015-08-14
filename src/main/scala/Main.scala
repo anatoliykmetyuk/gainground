@@ -23,8 +23,7 @@ object Main extends SimpleSubscriptApplication with Base {
 
       explode = let symbol   = "<--X-->"
                 let position -= 3
-                if this.collidesWith(playerChar) then playerDies.trigger
-                if this.collidesWith(zombieChar) then zombieDies.trigger
+                display.sprites.foreach: {case x: Character if this collidesWith x => x.death.trigger; case _ =>}
                 delay: 250
                 display.remove: this
 
@@ -40,7 +39,7 @@ object Main extends SimpleSubscriptApplication with Base {
     exitCmd     = 'x'
     continueCmd = 'r'
 
-    world = let messageObj.symbol = "Welcome! R - Start/Restart/Continue, A - back, D - forward, X - exit"
+    world = let messageObj.symbol = "Welcome! R - Start/Restart/Continue, A - back, D - forward, X - exit, M - landmine"
             display.add: messageObj
             continueCmd
             [init ; (** player && zombie && timer **) / end] ...
@@ -71,7 +70,7 @@ object Main extends SimpleSubscriptApplication with Base {
                                     let timeLeft = roundTime
 
     // Player
-    player         = playerControls && playerSensors / playerDies delay: 250 gameOver.trigger
+    player         = playerControls && playerSensors / playerChar.death delay: 250 gameOver.trigger
     playerControls = [keymap / ..] ...
     keymap         =   'd' playerChar.forward()
                      + 'a' playerChar.backward()
@@ -85,7 +84,7 @@ object Main extends SimpleSubscriptApplication with Base {
                     let landminesCount -= 1
 
     // Zombie
-    zombie   = zombieAI delay: zombieStepDelay ... / zombieDies display.remove: zombieChar
+    zombie   = zombieAI delay: zombieStepDelay ... / zombieChar.death display.remove: zombieChar
     zombieAI = var goToPlayer = math.random < zombieGoingToPlayerChance
                if goToPlayer then zombieChar.backward() else zombieChar.forward()
 

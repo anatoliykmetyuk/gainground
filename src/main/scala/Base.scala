@@ -10,7 +10,10 @@ trait Base extends ModelBase with ViewBase
 
 trait ModelBase {
   // Domain classes
-  case class Character (pos: Int, sym: String) extends SimpleSprite  (pos, sym, board.size)
+  case class Character (pos: Int, sym: String) extends SimpleSprite  (pos, sym, board.size) {
+    val death = new Trigger
+  }
+
   case class Decoration(pos: Int, sym: String) extends VariableSprite(pos, sym)
   case class Indicator(var _position: Int, sym: () => String) extends Sprite {
     def symbol = sym()
@@ -34,9 +37,7 @@ trait ModelBase {
   // Triggers
   val gameOver   = new Trigger
   val victory    = new Trigger
-  val zombieDies = new Trigger
-  val playerDies = new Trigger
-
+  
   // Constants
   val roundTime         = 10
   val zombieStepDelay   = 500
