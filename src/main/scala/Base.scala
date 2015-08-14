@@ -27,12 +27,15 @@ trait ModelBase {
   
   val timerInd      = Indicator(40, () => s"Time: $timeLeft"   )
   val levelInd      = Indicator(50, () => s"Level: $level"     )
-  val scoreInd      = Indicator(60, () => s"Score: $score"     )
-  val totalScoreInd = Indicator(70, () => s"Total: $totalScore")
+  val landminesInd  = Indicator(60, () => s"Mines: $landminesCount")
+  val scoreInd      = Indicator(70, () => s"Score: $score"     )
+  val totalScoreInd = Indicator(80, () => s"Total: $totalScore")
 
   // Triggers
-  val gameOver = new Trigger
-  val victory  = new Trigger
+  val gameOver   = new Trigger
+  val victory    = new Trigger
+  val zombieDies = new Trigger
+  val playerDies = new Trigger
 
   // Constants
   val roundTime         = 10
@@ -45,6 +48,7 @@ trait ModelBase {
   def score      = playerChar.position + 1
   var totalScore = 0
   def zombieGoingToPlayerChance = 2 * math.atan(level) / math.Pi
+  var landminesCount = 3
 }
 
 trait ViewBase {
