@@ -1,18 +1,14 @@
 package gainground
 
 import scala.language.implicitConversions
-
 import subscript.file
-
-import scala.swing._
-import scala.swing.event._
 
 import subscript.swing.SimpleSubscriptApplication
 import subscript.swing.Scripts._
 
 object Main extends SimpleSubscriptApplication with Base {
   override def live = subscript.DSL._execute(liveScript)
-  
+
   implicit script..
     key    (??c: Char     )      =  key2:top, ??c
     trigger(  t: Trigger  )      = @{t.addListener {() => there.codeExecutor.executeAA}}: {. .}
