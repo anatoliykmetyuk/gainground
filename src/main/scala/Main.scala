@@ -15,8 +15,8 @@ object Main extends SimpleSubscriptApplication with Base {
 
   script..
     // Framework
-    liveScript  = [world && update] / exit
-    exit        = 'x'
+    liveScript  = [world && update] / exitCmd
+    exitCmd     = 'x'
     continueCmd = 'r'
 
     world = let messageObj.symbol = "Welcome! R - Start/Restart/Continue, A - back, D - forward, X - exit"

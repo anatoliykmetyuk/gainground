@@ -1,9 +1,16 @@
 package gainground
 
+/**
+ * An object to be displayed on a scene. Has a position and a String
+ * representation that will be rendered.
+ */
 trait Sprite {
   def symbol: String
   def size = symbol.size
 
+  /**
+   * It is not possible to move the sprite beyond its bound.
+   */
   def bound: Int = Int.MaxValue
 
   var _position: Int
@@ -25,6 +32,9 @@ trait Sprite {
 class SimpleSprite  (var _position: Int, val symbol: String, override val bound: Int = Int.MaxValue) extends Sprite
 class VariableSprite(var _position: Int, var symbol: String, override val bound: Int = Int.MaxValue) extends Sprite
 
+/**
+ * Displayes sprites.
+ */
 trait Display {
   type Surface
   def newSurface: Surface
@@ -47,6 +57,9 @@ trait Display {
   }
 }
 
+/**
+ * Displayes sprites in the console.
+ */
 class ConsoleDisplay(val size: Int) extends Display {
   type Surface = StringBuffer
   def newSurface = new StringBuffer(" " * size)
